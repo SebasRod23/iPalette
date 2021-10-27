@@ -1,9 +1,11 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 import config from './config/config';
 import authRouter from './routers/auth';
+import paletteRouter from './routers/palette';
 
 const app = express();
 
@@ -17,9 +19,11 @@ const app = express();
 const db = mongoose.connection;
 
 app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use('/auth', authRouter);
+app.use('/palette', paletteRouter);
 
 app.get('/', (_: Request, res: Response) => {
   res.send('Server is running');

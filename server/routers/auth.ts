@@ -16,7 +16,6 @@ router.post(
   body('password').isString(),
   async (req: Request, res: Response) => {
     if (!validationResult(req).isEmpty()) {
-      console.log(validationResult(req));
       return res.status(400).json({
         message: 'Please fill all the fields correctly',
       });
@@ -47,7 +46,6 @@ router.post(
   body('password').isString(),
   async (req: Request, res: Response) => {
     if (!validationResult(req).isEmpty()) {
-      console.log(validationResult(req));
       return res.status(400).json({
         message: 'Please fill all the fields correctly',
       });

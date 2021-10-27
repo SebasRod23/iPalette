@@ -4,6 +4,7 @@ export interface iPalette extends Document {
   userId: string;
   name: string;
   colors: [string];
+  description: string;
 }
 
 const paletteSchema = new Schema<iPalette>(
@@ -18,6 +19,10 @@ const paletteSchema = new Schema<iPalette>(
     },
     colors: {
       type: [String],
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
   },
