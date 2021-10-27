@@ -1,4 +1,8 @@
-const SERVER_PORT = process.env.PORT || 3001;
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const SERVER_PORT = parseInt(process.env.PORT!) || 5000;
 
 const DB_URI = process.env.ATLAS_URI || 'localhost:27017';
 
