@@ -2,21 +2,21 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
-import CONFIG from './config/config';
+import config from './config/config';
 import authRouter from './routers/auth';
 
 const app = express();
 
 (async () => {
-  mongoose.connect(CONFIG.uri).then(
-    () => console.log('Connected to databse'),
+  mongoose.connect(config.db.uri).then(
+    () => console.log('Connected to database'),
     (error) => console.log(error),
   );
 })();
 
 const db = mongoose.connection;
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 app.use('/auth', authRouter);
@@ -25,6 +25,6 @@ app.get('/', (_: Request, res: Response) => {
   res.send('Server is running');
 });
 
-app.listen(CONFIG.port, () => {
-  console.log('Server is listening on port: ' + CONFIG.port);
+app.listen(config.server.port, () => {
+  console.log('Server is listening on port: ' + config.server.port);
 });
