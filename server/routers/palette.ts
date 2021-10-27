@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { body, validationResult } from 'express-validator';
+
 import hasAccess from '../middlewares/hasAccess';
 import hasJWT from '../middlewares/hasJWT';
 import Palette, { iPalette } from '../models/palette';
@@ -96,6 +97,19 @@ router.post(
           return res.status(500).json({ message: error.message, error });
         },
       );
+  },
+);
+
+router.post(
+  '/:paletteId/delete',
+  hasJWT,
+  hasAccess,
+  async (req: Request, res: Response) => {
+    const palette: iPalette = res.locals.palette;
+
+    palette.delete().then(() => {
+      return res.status(201).json({ message: 'Palette successfully deleted!' });
+    });
   },
 );
 
