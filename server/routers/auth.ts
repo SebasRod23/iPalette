@@ -32,9 +32,29 @@ router.post(
       });
       user.save().then(
         () => {
-          return res.status(201).json({ message: 'User created' });
+          signJWT(user, (error, token) => {
+            if (error)
+              return res.status(500).json({ message: error.message, error });
+            else if (token) {
+              res.cookie('token', token, {
+                httpOnly: true,
+                maxAge: config.cookie.maxage,
+              });
+              res.cookie('existToken', true, {
+                maxAge: config.cookie.maxage,
+              });
+              return res.status(200).json({
+                message: 'User created',
+              });
+            }
+          });
         },
-        (error) => console.log(error),
+        (error) => {
+          res.status(500).json({
+            message: error.message,
+            error,
+          });
+        },
       );
     });
   },
