@@ -91,12 +91,10 @@ router.post(
   },
 );
 
-/*
 router.post('/logout', hasJWT, async (req: Request, res: Response) => {
   res.clearCookie('token');
   res.clearCookie('existToken');
   return res.status(200).json({ message: 'Logout succesful!' });
 });
-*/
 
 export default router;
