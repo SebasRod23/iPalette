@@ -15,7 +15,7 @@ mongoose.connect(
   () => console.log('Connected to databse'),
 );
 
-const connection = mongoose.connection;
+const db = mongoose.connection;
 
 app.use(cors());
 
