@@ -17,6 +17,7 @@ import RegisterPage from './containers/auth/RegisterPage';
 import HomePage from './containers/palettes/Home';
 import CreatePage from './containers/palettes/CreatePage';
 import UpdatePage from './containers/palettes/UpdatePage';
+import LandingPage from './containers/LandingPage';
 
 const appBarStyles = makeStyles((_: Theme) =>
   createStyles({
@@ -104,6 +105,9 @@ const App: React.FC = () => {
         </AppBar>
 
         <Switch>
+          <Route exact path='/'>
+            <LandingPage />
+          </Route>
           <Route exact path='/login'>
             <LoginPage />
           </Route>
