@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Button, Grid, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router';
 
 import { iPalette } from '../../interfaces/palette';
-import { Typography } from '@material-ui/core';
 import PaletteCell from '../../components/palettes/PaletteCell';
 
 const HomePage: React.FC = () => {
   const [palettes, setPalettes] = useState<iPalette[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     axios
@@ -18,7 +20,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <Grid container direction='column'>
       <Typography
         variant='h4'
         align='center'
@@ -27,6 +29,15 @@ const HomePage: React.FC = () => {
       >
         Your Palettes:
       </Typography>
+      <Button
+        variant='contained'
+        color='secondary'
+        onClick={() => {
+          history.push('/create-palette');
+        }}
+      >
+        New Palette
+      </Button>
       <div
         style={{
           display: 'flex',
@@ -40,7 +51,7 @@ const HomePage: React.FC = () => {
           <PaletteCell palette={palette} />
         ))}
       </div>
-    </div>
+    </Grid>
   );
 };
 

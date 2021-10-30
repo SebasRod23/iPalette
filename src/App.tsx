@@ -15,6 +15,7 @@ import LoginPage from './containers/auth/LoginPage';
 import { UserContextProvider } from './contexts/UserContext';
 import RegisterPage from './containers/auth/RegisterPage';
 import HomePage from './containers/palettes/Home';
+import CreatePage from './containers/palettes/CreatePage';
 
 const appBarStyles = makeStyles((_: Theme) =>
   createStyles({
@@ -114,11 +115,9 @@ const App: React.FC = () => {
 
           {/* Palettes */}
           <Route exact path='/create-palette'>
-            <div>
-              <h1>Create palette</h1>
-            </div>
+            <CreatePage />
           </Route>
-          <Route exact path='/view-palette/:paletteId'>
+          <Route exact path='/edit-palette/:paletteId'>
             <div>
               <h1>Create palette</h1>
             </div>
