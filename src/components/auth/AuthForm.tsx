@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router';
 
-const formStyles = makeStyles((_: Theme) =>
+const formStyles = makeStyles((theme: Theme) =>
   createStyles({
     centerForm: {
       position: 'absolute',
