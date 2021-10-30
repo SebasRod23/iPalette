@@ -11,6 +11,10 @@ import {
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import axios from 'axios';
 
+import LoginPage from './containers/Auth/LoginPage';
+import { UserContextProvider } from './contexts/UserContext';
+import RegisterPage from './containers/Auth/RegisterPage';
+
 const appBarStyles = makeStyles((_: Theme) =>
   createStyles({
     root: {
@@ -71,55 +75,58 @@ const App: React.FC = () => {
       history.push('/login');
   };
 
+  let userContextValue = {
+    login,
+    logout,
+  };
+
   return (
     <div>
-      <AppBar position='static'>
-        <Toolbar variant='dense'>
-          <Typography variant='h4' className={appBarClasses.root}>
-            iPalette
-          </Typography>
+      <UserContextProvider value={userContextValue}>
+        <AppBar position='static'>
+          <Toolbar variant='dense'>
+            <Typography variant='h5' className={appBarClasses.root}>
+              iPalette
+            </Typography>
 
-          {isAuth ? (
-            <Button color='inherit' onClick={() => logout()}>
-              Logout
-            </Button>
-          ) : (
-            <Button color='inherit' onClick={() => history.push('/login')}>
-              Login
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
+            {isAuth ? (
+              <Button color='inherit' onClick={() => logout()}>
+                Logout
+              </Button>
+            ) : (
+              <Button color='inherit' onClick={() => history.push('/login')}>
+                Login
+              </Button>
+            )}
+          </Toolbar>
+        </AppBar>
 
-      <Switch>
-        <Route exact path='/login'>
-          <div>
-            <h1>Login</h1>
-          </div>
-        </Route>
-        <Route exact path='/register'>
-          <div>
-            <h1>Register</h1>
-          </div>
-        </Route>
-        <Route exact path='/home'>
-          <div>
-            <h1>Home</h1>
-          </div>
-        </Route>
+        <Switch>
+          <Route exact path='/login'>
+            <LoginPage />
+          </Route>
+          <Route exact path='/register'>
+            <RegisterPage />
+          </Route>
+          <Route exact path='/home'>
+            <div>
+              <h1>Home</h1>
+            </div>
+          </Route>
 
-        {/* Palettes */}
-        <Route exact path='/create-palette'>
-          <div>
-            <h1>Create palette</h1>
-          </div>
-        </Route>
-        <Route exact path='/view-palette/:paletteId'>
-          <div>
-            <h1>Create palette</h1>
-          </div>
-        </Route>
-      </Switch>
+          {/* Palettes */}
+          <Route exact path='/create-palette'>
+            <div>
+              <h1>Create palette</h1>
+            </div>
+          </Route>
+          <Route exact path='/view-palette/:paletteId'>
+            <div>
+              <h1>Create palette</h1>
+            </div>
+          </Route>
+        </Switch>
+      </UserContextProvider>
     </div>
   );
 };

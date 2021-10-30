@@ -42,8 +42,6 @@ const formStyles = makeStyles((_: Theme) =>
 interface AuthFormProps {
   title: string;
   type: 'login' | 'register';
-  warning: string | undefined;
-  setWarning: React.Dispatch<React.SetStateAction<string | undefined>>;
   username?: string | undefined;
   setUsername?: React.Dispatch<React.SetStateAction<string | undefined>>;
   email: string | undefined;
