@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { Card, Button } from '@mui/material';
 import { useHistory } from 'react-router';
+import axios from 'axios';
 
 import { iPalette } from '../../interfaces/palette';
 
@@ -53,6 +54,21 @@ const PaletteCell: React.FC<CellProps> = (props: CellProps) => {
   const cellClasses = cellStyles();
   const history = useHistory();
 
+  const DeleteThis = async () => {
+    await axios(
+      'http://localhost:3001/palette/' + props.palette._id + '/delete',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        withCredentials: true,
+        responseType: 'json',
+      },
+    ).then((res) => {
+      window.location.reload();
+    });
+  };
   return (
     <Card key={props.palette._id} className={cellClasses.cell} raised>
       <CardHeader
@@ -89,7 +105,7 @@ const PaletteCell: React.FC<CellProps> = (props: CellProps) => {
           >
             Edit
           </Button>
-          <Button variant='contained' color='error'>
+          <Button variant='contained' color='error' onClick={DeleteThis}>
             Remove
           </Button>
         </div>
