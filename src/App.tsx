@@ -11,9 +11,10 @@ import {
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import axios from 'axios';
 
-import LoginPage from './containers/Auth/LoginPage';
+import LoginPage from './containers/auth/LoginPage';
 import { UserContextProvider } from './contexts/UserContext';
-import RegisterPage from './containers/Auth/RegisterPage';
+import RegisterPage from './containers/auth/RegisterPage';
+import HomePage from './containers/palettes/Home';
 
 const appBarStyles = makeStyles((_: Theme) =>
   createStyles({
@@ -22,7 +23,6 @@ const appBarStyles = makeStyles((_: Theme) =>
       flexGrow: 1,
       justifyContent: 'space-between',
     },
-    button: {},
   }),
 );
 
@@ -109,9 +109,7 @@ const App: React.FC = () => {
             <RegisterPage />
           </Route>
           <Route exact path='/home'>
-            <div>
-              <h1>Home</h1>
-            </div>
+            <HomePage />
           </Route>
 
           {/* Palettes */}
