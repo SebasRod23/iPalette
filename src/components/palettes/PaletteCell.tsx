@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Card, Button } from '@mui/material';
+import { useHistory } from 'react-router';
 
 import { iPalette } from '../../interfaces/palette';
 
@@ -50,9 +51,10 @@ const cellStyles = makeStyles((_: Theme) =>
 
 const PaletteCell: React.FC<CellProps> = (props: CellProps) => {
   const cellClasses = cellStyles();
+  const history = useHistory();
 
   return (
-    <Card key={props.palette.paletteId} className={cellClasses.cell} raised>
+    <Card key={props.palette._id} className={cellClasses.cell} raised>
       <CardHeader
         title={props.palette.name}
         titleTypographyProps={{ align: 'center' }}
@@ -78,7 +80,13 @@ const PaletteCell: React.FC<CellProps> = (props: CellProps) => {
           ))}
         </div>
         <div className={cellClasses.displayRowsButtons}>
-          <Button variant='contained' color='primary'>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => {
+              history.push('/edit-palette/' + props.palette._id);
+            }}
+          >
             Edit
           </Button>
           <Button variant='contained' color='error'>

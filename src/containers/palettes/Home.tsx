@@ -16,7 +16,9 @@ const HomePage: React.FC = () => {
         responseType: 'json',
         withCredentials: true,
       })
-      .then((res) => setPalettes(res.data));
+      .then((res) => {
+        setPalettes(res.data);
+      });
   }, []);
 
   return (

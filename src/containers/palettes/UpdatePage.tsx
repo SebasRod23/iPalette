@@ -1,21 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
+import { Typography } from '@material-ui/core';
 
 import PaletteForm from '../../components/palettes/PaletteForm';
-import { Typography } from '@material-ui/core';
 import Spinner from '../../components/Spinner';
+import { iPalette } from '../../interfaces/palette';
 
-const CreatePage: React.FC = () => {
+const UpdatePage: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [colors, setColors] = useState<string[]>(['#000000']);
   const [loading, setLoading] = useState<boolean>(false);
+  const [id, setId] = useState<string>('');
   const history = useHistory();
+  const location = useLocation();
 
-  const Save = async () => {
+  useEffect(() => {
+    const paletteId = location.pathname.split('/')[2];
+    axios
+      .get<iPalette>('http://localhost:3001/palette/' + paletteId, {
+        responseType: 'json',
+        withCredentials: true,
+      })
+      .then((res) => {
+        setName(res.data.name);
+        setDescription(res.data.description);
+        setColors(res.data.colors);
+        setId(res.data._id);
+      });
+    // eslint-disable-next-line
+  }, []);
+
+  const Update = async () => {
     setLoading(true);
-    await axios('http://localhost:3001/palette/add', {
+    await axios('http://localhost:3001/palette/' + id + '/update', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -47,7 +66,7 @@ const CreatePage: React.FC = () => {
       ) : (
         <>
           <Typography variant='h5' gutterBottom align='center'>
-            Create new Palette
+            Edit this palette
           </Typography>
           <PaletteForm
             name={name}
@@ -56,8 +75,8 @@ const CreatePage: React.FC = () => {
             setDescription={setDescription}
             colors={colors}
             setColors={setColors}
-            isEditing={false}
-            method={Save}
+            isEditing={true}
+            method={Update}
           />
         </>
       )}
@@ -65,4 +84,4 @@ const CreatePage: React.FC = () => {
   );
 };
 
-export default CreatePage;
+export default UpdatePage;

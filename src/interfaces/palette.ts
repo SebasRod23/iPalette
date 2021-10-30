@@ -1,5 +1,5 @@
 export interface iPalette {
-  paletteId: string;
+  _id: string;
   name: string;
   colors: [string];
   description: string;

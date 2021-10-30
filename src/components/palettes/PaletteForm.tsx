@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   makeStyles,
@@ -6,7 +6,6 @@ import {
   TextField,
   Theme,
   Container,
-  Typography,
 } from '@material-ui/core';
 import { useHistory } from 'react-router';
 
@@ -41,7 +40,11 @@ const PaletteForm: React.FC<PaletteFormProps> = (props: PaletteFormProps) => {
 
   const history = useHistory();
   const [nColors, setNColors] = useState<number>(1);
-
+  useEffect(() => {
+    if (props.isEditing) setNColors(props.colors.length);
+    console.log(nColors);
+    // eslint-disable-next-line
+  }, []);
   return (
     <Container>
       <form className={formClasses.displayRows}>
@@ -51,6 +54,7 @@ const PaletteForm: React.FC<PaletteFormProps> = (props: PaletteFormProps) => {
           onChange={(event) => {
             props.setName(event.target.value);
           }}
+          value={props.name}
         />
         <TextField
           variant='outlined'
@@ -58,11 +62,12 @@ const PaletteForm: React.FC<PaletteFormProps> = (props: PaletteFormProps) => {
           onChange={(event) => {
             props.setDescription(event.target.value);
           }}
+          value={props.description}
         />
         <TextField
           label='# Colors:'
           type='number'
-          value={nColors}
+          value={props.isEditing ? props.colors.length : nColors}
           onChange={(event) => {
             setNColors(parseInt(event.target.value));
             if (parseInt(event.target.value) > props.colors.length) {
@@ -83,8 +88,9 @@ const PaletteForm: React.FC<PaletteFormProps> = (props: PaletteFormProps) => {
         {props.colors.map((color, i) => (
           <TextField
             variant='outlined'
-            label={'Color #' + i}
+            label={'Color #' + (i + 1)}
             type='color'
+            value={color}
             onChange={(event) => {
               let temp = props.colors;
               temp[i] = event.target.value;
@@ -100,7 +106,7 @@ const PaletteForm: React.FC<PaletteFormProps> = (props: PaletteFormProps) => {
           >
             {!props.isEditing ? 'Save' : 'Update'}
           </Button>
-          <Button variant='outlined' onClick={() => history.push('/')}>
+          <Button variant='outlined' onClick={() => history.push('/home')}>
             Cancel
           </Button>
         </div>
